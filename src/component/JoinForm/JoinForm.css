@@ -1,0 +1,10 @@
+.customTextField .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+    border: none;
+    background-color: #f9f9f979;
+    border-radius: 0;
+}
+
+
+.customTextField .MuiInputLabel-root.Mui-focused {
+    color: #2A254B;
+}

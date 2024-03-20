@@ -1,59 +1,34 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useTheme } from "@emotion/react";
-import HomeBannerImg from "../HomeBanner/HomeBanner.jpg"
+import { Box, Button, Grid, Typography } from "@mui/material";
 
-import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
+import HomeBannerImg from "../HomeBanner/HomeBanner.jpg";
 
 const HomeBanner = () => {
-
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
     return (
-        isMobile ? (
-            <Box sx={{ flexGrow: 1, marginTop: "30px" }}>
-                <Grid container>
-                    <Grid item xs={12} sx={{ background: "#5e4632", height: "584px" }}>
-                        <Grid item xs={11} direction="column" sx={{ display: 'flex', justifyContent: 'space-around', height: '100%', paddingLeft: "25px" }}>
-                            <Typography sx={{ color: "#fff", fontSize: "32px" }}>
-                                Update your wardrobe with our collection of stylish women's clothing!
-                            </Typography>
-                            <Box>
-                                <Typography sx={{ color: "#fff", fontSize: "18px", marginBottom: "15px" }}>
-                                    From elegant dresses to comfortable everyday looks, we have everything to highlight your personality.
-                                    Discover the latest fashion trends, enjoy comfort and express your uniqueness with our collection.
-                                </Typography>
-                                <Button sx={{ color: "#fff", background: "#ffffff8f", height: "56px", width: "100%" }}>View collection</Button>
-                            </Box>
-                        </Grid>
+        <Box sx={{ flexGrow: 1, margin: { xs: "0", md: "30px 80px" }, color: "#FFF" }}>
+            <Grid container>
+                <Grid item xs={12} md={7} sx={{ height: "584px", display: 'flex', flexDirection: "column", justifyContent: 'space-around', alignItems: "center" }}
+                    backgroundColor="background.accent3"
+                >
+                    <Grid item xs={11} sx={{ height: '100%', display: { xs: "flex", md: "null" }, flexDirection: { xs: "column", md: "null" }, justifyContent: { xs: "space-evenly", md: "null" } }}>
+                        <Typography sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" }, padding: { xs: "0", md: "0" } }}>
+                            Update your wardrobe with our collection of stylish women's clothing!
+                        </Typography>
+                        <Button sx={{ display: { xs: "none", md: "block" }, color: "#FFF", backgroundColor: "#FFFFFF8F", marginBottom: "20px", height: "56px", width: "192px" }}>View collection</Button>
+                        <Typography sx={{ fontSize: { xs: "1rem", sm: "1.1rem", md: "1.125rem" } }}>
+                            From elegant dresses to comfortable everyday looks, we have everything to highlight your personality.
+                            Discover the latest fashion trends, enjoy comfort and express your uniqueness with our collection.
+                            Feel irresistible every day - choose high-quality women's clothing from us!
+                        </Typography>
+                        <Button sx={{ display: { xs: "block", md: "none" }, color: "#FFF", backgroundColor: "#FFFFFF8F", width: "100%", height: '56px' }}>View collection</Button>
                     </Grid>
                 </Grid>
-            </Box>
-        ) : (
-            <Box sx={{ flexGrow: 1, margin: "30px" }}>
-                <Grid container>
-                    <Grid item xs={7} sx={{ background: "#5e4632", height: "584px" }}>
-                        <Grid item xs={11} direction="column" sx={{ display: 'flex', justifyContent: 'space-between', height: '100%' }}>
-                            <Box>
-                                <Typography sx={{ color: "#fff", fontSize: "32px", padding: "60px 0 30px 60px" }}>
-                                    Update your wardrobe with our collection of stylish women's clothing!
-                                </Typography>
-                                <Button sx={{ color: "#fff", background: "#ffffff8f", margin: "0 0 30px 60px", height: "56px", width: "192px" }}>View collection</Button>
-                            </Box>
-                            <Typography sx={{ color: "#fff", fontSize: "18px", padding: "0 0 30px 60px" }}>
-                                From elegant dresses to comfortable everyday looks, we have everything to highlight your personality.
-                                Discover the latest fashion trends, enjoy comfort and express your uniqueness with our collection.
-                                Feel irresistible every day - choose high-quality women's clothing from us!"
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={5}>
-                        <img src={HomeBannerImg} style={{ width: "100%", height: "584px" }} />
-                    </Grid>
+                <Grid item xs={5} sx={{ display: { xs: "none", md: "block" } }}>
+                    <img src={HomeBannerImg} style={{ width: "100%", height: "584px" }} alt="Home Banner" />
                 </Grid>
-            </Box>
-        )
-    )
-}
+            </Grid>
+        </Box>
+    );
+};
 
 export default HomeBanner;

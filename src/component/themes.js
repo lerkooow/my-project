@@ -17,6 +17,7 @@ export const lightTheme = createTheme({
             accent1: "#F9F9F9",
             accent2: "#FFF",
             accent3: "#5e4632",
+            accent4: "rgba(198, 201, 201, 0.1)",
             paper: "#FFF",
             button: "#2A254B"
         },
@@ -45,6 +46,7 @@ export const darkTheme = createTheme({
             accent1: "#000",
             accent2: "#22202e",
             accent3: "#2e1f20",
+            accent4: "rgba(0, 0, 0, 0.2)",
             paper: "#22202e",
             button: "#FFFFFF"
         },
@@ -73,6 +75,7 @@ export const greyTheme = createTheme({
             accent1: "#424040",
             accent2: "#9c9898",
             accent3: "#1e1e1e",
+            accent4: "rgba(57, 49, 49, 0.1)",
             paper: "rgba(169, 166, 166, 0.561)",
             button: "#333333"
         },

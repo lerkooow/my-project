@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
 
@@ -19,14 +20,23 @@ const Header = () => {
         dispatch(switchesColor(e.target.value));
     };
 
+    const [user, setUser] = useState(null);
+    const userId = localStorage.getItem("userId");
+
+    useEffect(() => {
+        fetch(`https://fakestoreapi.com/users/${userId}`)
+            .then(res => res.json())
+            .then(json => setUser(json))
+    }, [userId]);
+
     const { switches } = useSelector(state => state.onlineStore);
 
     return (
         <Box sx={{ flexGrow: 1, paddingTop: "25px" }}>
             <Grid container>
                 <Grid item xs={4}>
-                    <Typography sx={{ paddingLeft: "28px", fontSize: "1.5rem" }} color="secondary.main">
-                        <Link to="/">
+                    <Typography sx={{ paddingLeft: "28px" }} color="secondary.main">
+                        <Link to="/" style={{ fontSize: "1.5rem" }}>
                             Avion
                         </Link>
                     </Typography>
@@ -47,8 +57,16 @@ const Header = () => {
                     <Typography sx={{ fontSize: "1rem" }}>Contact</Typography>
                     <Typography sx={{ fontSize: "1rem" }}>Blog</Typography>
                     <SearchIcon />
-                    <AddShoppingCartIcon />
-                    <AccountCircleIcon style={{ marginRight: "51px" }} />
+                    <Link to="/cart">
+                        <AddShoppingCartIcon />
+                    </Link>
+                    <Link to="/user">
+                        {user && user.status !== "error" ? (
+                            <Typography style={{ marginRight: "51px" }}>{user.username}</Typography>
+                        ) : (
+                            <AccountCircleIcon style={{ marginRight: "51px" }} />
+                        )}
+                    </Link>
                 </Grid>
             </Grid>
         </Box >

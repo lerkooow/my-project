@@ -4,13 +4,13 @@ import Header from "../Header/Header"
 import HomeBanner from "../HomeBanner/HomeBanner";
 import BrandDifferent from "../BrandDifferent/BrandDifferent";
 import NewMen from "../NewMen/NewMen";
-import PopularProducts from "../PopularProducts/PopularProducts";
 import JoinForm from "../JoinForm/JoinForm";
 import InfoBanner from "../InfoBanner/InfoBanner";
 import Footer from "../Footer/Footer";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { lightTheme, darkTheme, greyTheme } from "../themes";
+import NewElectronics from "../PopularProducts/NewElectronics";
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
         <HomeBanner />
         <BrandDifferent />
         <NewMen />
-        <PopularProducts />
+        <NewElectronics />
         <JoinForm />
         <InfoBanner />
         <Footer />

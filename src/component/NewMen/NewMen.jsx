@@ -2,15 +2,21 @@
 import { useEffect, useState } from "react";
 import { Box, Grid, Typography, Card, CardContent, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const NewMen = () => {
 
     const [mens, setMens] = useState([]);
-
     useEffect(() => {
-        fetch("https://fakestoreapi.com/products/category/products/men's clothing")
-            .then(res => res.json())
-            .then(json => setMens(json));
+        const fetchDataMens = async () => {
+            try {
+                const response = await axios.get('https://fakestoreapi.com/products/category/men\'s clothing');
+                setMens(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchDataMens();
     }, []);
 
     return (
@@ -24,7 +30,9 @@ const NewMen = () => {
                             <CardContent style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                 <div>
                                     <Typography gutterBottom color="text.secondary" sx={{ fontSize: "1.25rem" }}>
-                                        {item.title}
+                                        <Link to={`/men's clothing/${item.id}`}>
+                                            {item.title}
+                                        </Link>
                                     </Typography>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -35,16 +43,17 @@ const NewMen = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                ))}
-            </Grid>
+                ))
+                }
+            </Grid >
             <Box sx={{ display: "flex" }}>
-                <Button sx={{ margin: "0 auto", marginTop: "30px", backgroundColor: "background.button", color: "text.accent1", width: "200px", height: "56px" }}>
-                    <Link >
+                <Button sx={{ margin: "0 auto", marginTop: "30px", backgroundColor: "background.button", color: "text.accent1", width: "200px", height: "56px", '&:hover': { color: '#FFF', backgroundColor: 'background.accent3' } }}>
+                    <Link to="/men's clothing">
                         See more
                     </Link>
                 </Button>
             </Box>
-        </Box>
+        </Box >
     )
 }
 

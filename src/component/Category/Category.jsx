@@ -21,9 +21,11 @@ const Category = () => {
         <Box sx={{ flexGrow: 1, margin: "25px 0" }} color="primary.main">
             <Grid container>
                 <Grid item xs={12} sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "40px" }}>
-                    <Link to="/all_products">
-                        <Typography sx={{ fontSize: "1rem" }}>All products</Typography>
-                    </Link>
+                    <Typography sx={{ fontSize: "1rem" }}>
+                        <Link to="/all products">
+                            All products
+                        </Link>
+                    </Typography>
                     {categories.map((item) => (
                         <Link to={`/${item}`} key={item}>
                             <Typography key={item} sx={{ fontSize: "1rem" }}>{capitalizeFirstLetter(item)}</Typography>

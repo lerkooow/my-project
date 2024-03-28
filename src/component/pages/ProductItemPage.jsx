@@ -6,9 +6,6 @@ import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { lightTheme, darkTheme, greyTheme } from "../themes";
 import ProductItem from "../ProductItem/ProductItem";
-import BrandDifferent from "../BrandDifferent/BrandDifferent";
-import JoinForm from "../JoinForm/JoinForm";
-import NewElectronics from "../PopularProducts/NewElectronics";
 
 const ProductItemPage = () => {
 
@@ -22,9 +19,6 @@ const ProductItemPage = () => {
                     <Category />
                 </Box>
                 <ProductItem />
-                <NewElectronics />
-                <BrandDifferent />
-                <JoinForm />
                 <Footer />
             </ThemeProvider>
         </Box >

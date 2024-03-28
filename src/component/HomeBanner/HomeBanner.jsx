@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Link } from "react-router-dom";
+
 import { Box, Button, Grid, Typography } from "@mui/material";
 
 import HomeBannerImg from "../HomeBanner/HomeBanner.jpg";
-import { Link } from "react-router-dom";
 
 const HomeBanner = () => {
     return (

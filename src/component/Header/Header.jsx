@@ -11,28 +11,34 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Header = () => {
 
+    const { switches } = useSelector(state => state.onlineStore);
+    const [user, setUser] = useState(null);
+    const userId = localStorage.getItem("userId");
+
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`https://fakestoreapi.com/users/${userId}`);
+                setUser(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        }
+        fetchData();
+    })
 
     const handleSwitchChange = (e) => {
         dispatch(switchesColor(e.target.value));
     };
 
-    const [user, setUser] = useState(null);
-    const userId = localStorage.getItem("userId");
-
-    useEffect(() => {
-        fetch(`https://fakestoreapi.com/users/${userId}`)
-            .then(res => res.json())
-            .then(json => setUser(json))
-    }, [userId]);
-
-    const { switches } = useSelector(state => state.onlineStore);
-
     return (
-        <Box sx={{ flexGrow: 1, paddingTop: "25px" }}>
+        <Box sx={{ flexGrow: 1, paddingTop: "30px" }}>
             <Grid container>
                 <Grid item xs={4}>
                     <Typography sx={{ paddingLeft: "28px" }} color="secondary.main">

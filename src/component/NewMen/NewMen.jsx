@@ -29,11 +29,13 @@ const NewMen = () => {
                             <div style={{ backgroundImage: `url(${item.image})`, height: 0, paddingTop: '100%', backgroundPosition: "center center", backgroundSize: "contain" }}></div>
                             <CardContent style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                 <div>
-                                    <Typography gutterBottom color="text.secondary" sx={{ fontSize: "1.25rem" }}>
-                                        <Link to={`/men's clothing/${item.id}`}>
+
+                                    <Link to={`/men's clothing/${item.id}`}>
+                                        <Typography gutterBottom color="text.secondary" sx={{ fontSize: "1.25rem" }}>
                                             {item.title}
-                                        </Link>
-                                    </Typography>
+                                        </Typography>
+                                    </Link>
+
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <Typography variant="body2" color="text.secondary" sx={{ fontSize: "1.125rem" }}>

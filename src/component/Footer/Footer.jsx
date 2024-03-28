@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
+
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -5,21 +8,16 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
-import { useEffect, useState } from "react";
+
+import { useSelector } from "react-redux";
 
 const menu = ["New arrivals", "Best sellers", "Recently viewed", "Popular this week", "All products"];
 const ourCompany = ["About us", "Vacancies", "Contact us", "Privacy", "Returns policy"];
 
-
 const Footer = () => {
 
-    const [categories, setCategories] = useState([]);
+    const { categories } = useSelector(state => state.onlineStore);
 
-    useEffect(() => {
-        fetch("https://fakestoreapi.com/products/categories")
-            .then(res => res.json())
-            .then(json => setCategories(json));
-    }, []);
     const capitalizeFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
@@ -45,13 +43,18 @@ const Footer = () => {
                 <Typography sx={{ fontSize: "1rem" }}>
                     Categories
                 </Typography>
-                <Typography sx={{ fontSize: "0.875rem" }}>All products</Typography>
-                {categories
-                    .map((item) => (
+                <Link to="/all products">
+                    <Typography sx={{ fontSize: "0.875rem" }}>
+                        All products
+                    </Typography>
+                </Link>
+                {categories && categories.map((item) => (
+                    <Link to={`/${item}`} key={item}>
                         <Typography key={item} sx={{ fontSize: "0.875rem" }}>
                             {capitalizeFirstLetter(item)}
                         </Typography>
-                    ))}
+                    </Link>
+                ))}
             </Grid>
             <Grid item md={2} sm={4} xs={6}
                 sx={{ padding: { xs: "58px 15px 50px 15px", md: "58px 15px 50px 82px" } }}
@@ -69,7 +72,9 @@ const Footer = () => {
                 <Typography sx={{ fontSize: "1rem", marginBottom: "10px" }}>Join our mailing list</Typography>
                 <Box sx={{ display: "flex" }}>
                     <TextField label="your@email.com" className="customTextField" sx={{ width: "70%" }} />
-                    <Button sx={{ backgroundColor: "#FFF", color: "#000", width: "126px", borderRadius: "0" }}>Sign up</Button>
+                    <Button sx={{ width: "126px", borderRadius: "0", backgroundColor: "background.button", color: "text.accent1", '&:hover': { color: "text.accent1", backgroundColor: 'background.button' } }}>
+                        Send
+                    </Button>
                 </Box>
             </Grid>
             <Grid item xs={12} sx={{ padding: { xs: "58px 0 23px 0", md: "58px 0 23px 82px" }, display: "flex", justifyContent: { xs: "center", md: "space-between" } }}>

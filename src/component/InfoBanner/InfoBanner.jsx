@@ -1,6 +1,6 @@
-import InfoBannerImg from "./InfoBanner.jpg"
-
 import { Box, Grid, Typography } from "@mui/material";
+
+import InfoBannerImg from "./InfoBanner.jpg";
 
 const InfoBanner = () => {
 

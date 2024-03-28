@@ -21,7 +21,7 @@ const UserCartPage = () => {
                 <UserCart />
                 <Footer />
             </ThemeProvider>
-        </Box >
+        </Box>
     )
 }
 

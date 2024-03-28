@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { Fragment, useState } from 'react';
+
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
@@ -12,9 +13,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from 'react-router-dom';
 
 export default function AnchorTemporaryDrawer() {
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         right: false,
     });
 
@@ -34,19 +36,23 @@ export default function AnchorTemporaryDrawer() {
         >
             <List>
                 {['About us', 'Contact', 'Blog'].map((text) => (
-                    <ListItem key={text} disablePadding>
+                    <ListItem key={text}>
                         <ListItemButton>
                             <ListItemText primary={text} />
                         </ListItemButton>
                     </ListItem>
                 ))}
             </List>
-            <ListItemIcon disablePadding>
+            <ListItemIcon>
                 <ListItemButton>
-                    <ListItemIcon>
-                        <SearchIcon />
-                        <AddShoppingCartIcon />
-                        <AccountCircleIcon />
+                    <ListItemIcon sx={{ padding: "8px 16px" }}>
+                        <SearchIcon style={{ marginRight: "30px" }} />
+                        <Link to="/cart">
+                            <AddShoppingCartIcon style={{ marginRight: "30px" }} />
+                        </Link>
+                        <Link to="/user">
+                            <AccountCircleIcon />
+                        </Link>
                     </ListItemIcon>
                 </ListItemButton>
             </ListItemIcon>
@@ -59,7 +65,7 @@ export default function AnchorTemporaryDrawer() {
     return (
         <div>
             {['right'].map((anchor) => (
-                <React.Fragment key={anchor}>
+                <Fragment key={anchor}>
                     <Button onClick={toggleDrawer(anchor, true)}><MenuIcon /></Button>
                     <Drawer
                         anchor={anchor}
@@ -68,7 +74,7 @@ export default function AnchorTemporaryDrawer() {
                     >
                         {list(anchor)}
                     </Drawer>
-                </React.Fragment>
+                </Fragment>
             ))}
         </div>
     );

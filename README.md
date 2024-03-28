@@ -17,3 +17,7 @@ Create component Popular Products, Products, New Men, Join Form, Info Banner, Fo
 ### Create component ProductItemPage, UserAccountPage, UserCartPage... + correct Category, Header, HomeBanner...
 
 Create component ProductItemPage, UserAccountPage, UserCartPage... + correct Category, Header, HomeBanner...
+
+### Correct component + add to cart (not completely)
+
+Correct component + add to cart (not completely)

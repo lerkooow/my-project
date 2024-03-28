@@ -1,64 +1,56 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, fetchCartUser } from "../../toolkitRedux/storeSlice";
 
 const Cart = ({ userId }) => {
-    const [cart, setCart] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [cartProducts, setCartProducts] = useState(null);
     const [totalAmount, setTotalAmount] = useState(0);
 
+    const { cartUser, cart } = useSelector(state => state.onlineStore)
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        fetch(`https://fakestoreapi.com/carts/${userId}`)
-            .then(res => res.json())
-            .then(json => {
-                setCart(json);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching cart:', error);
-                setIsLoading(false);
-            });
+        dispatch(fetchCart(userId));
+        setIsLoading(false);
     }, [userId]);
 
     useEffect(() => {
         if (!cart || !cart.products) return;
 
         const productIds = cart.products.map(product => product.productId);
-
-        const fetchProducts = async () => {
-            try {
-                const promises = productIds.map(productId =>
-                    fetch(`https://fakestoreapi.com/products/${productId}`).then(res => res.json())
-                );
-                const products = await Promise.all(promises);
-                setCartProducts(products);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        };
-
-        fetchProducts();
+        dispatch(fetchCartUser(productIds));
     }, [cart]);
 
     useEffect(() => {
-        if (!cartProducts) return;
+        if (!cartUser) return;
 
-        const total = cartProducts.reduce((accumulator, product) => {
-            const quantity = cart.products.find(item => item.productId === product.id).quantity;
-            const productTotal = quantity * product.price;
-            return accumulator + productTotal;
-        }, 0);
+        const calculateTotalAmount = () => {
+            const total = cartUser.reduce((accumulator, product) => {
+                const cartProduct = cart.products.find(item => item.productId === product.id);
+                const quantity = cartProduct ? cartProduct.quantity : 0;
+                const productTotal = quantity * product.price;
+                return accumulator + productTotal;
+            }, 0);
+            console.log("🚀 ~ total ~ cartUser:", cartUser)
+            setTotalAmount(total);
+        };
 
-        setTotalAmount(total);
-    }, [cartProducts, cart]);
+        calculateTotalAmount();
+    }, [cartUser, cart]);
 
-    if (isLoading || !cart) {
-        return <Box>Loading...</Box>;
+    if (isLoading) {
+        return (
+            <Box sx={{ height: "407px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Typography sx={{ fontSize: "2rem" }}>Loading...</Typography>
+            </Box>
+        );
     }
 
     return (
-        <Box sx={{ margin: { xs: "20px", sm: "40px", md: "80px" } }} color="primary.main">
+        <Box sx={{ margin: { xs: "20px", sm: "40px", md: "80px 80px 30px 80px" } }} color="primary.main">
             <Grid container sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center", borderBottom: "1px solid rgba(77, 77, 77, 0.3)", padding: "10px 0" }}>
                 <Grid item xs={12} sm={4}>
                     <Typography variant="h6">Product</Typography>
@@ -70,8 +62,9 @@ const Cart = ({ userId }) => {
                     <Typography variant="h6" sx={{ textAlign: "end" }}>Total</Typography>
                 </Grid>
             </Grid>
-            {cartProducts && cartProducts.map((product) => {
-                const quantity = cart.products.find(item => item.productId === product.id).quantity;
+            {cartUser && cartUser.map((product) => {
+                const cartProduct = cart.products.find(item => item.productId === product.id);
+                const quantity = cartProduct ? cartProduct.quantity : 0;
                 const total = quantity * product.price;
 
                 return (
@@ -92,7 +85,7 @@ const Cart = ({ userId }) => {
             <Typography variant="h6" sx={{ margin: "30px 0", textAlign: "end" }}>Subtotal: £{totalAmount.toFixed(2)}</Typography>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
-                    sx={{ marginTop: "30px", backgroundColor: "background.button", color: 'text.accent1', width: "126px", height: "56px", borderRadius: "0" }}>
+                    sx={{ backgroundColor: "background.button", color: 'text.accent1', width: "126px", height: "56px", borderRadius: "0" }}>
                     Continue
                 </Button>
             </Box>

@@ -5,6 +5,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
+
   return (
     <BaseNumberInput
       slots={{
@@ -28,8 +29,10 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
+
 export default function QuantityInput() {
-  return <NumberInput aria-label="Quantity Input" defaultValue={1} min={1} max={99} />;
+
+  return <NumberInput aria-label="Quantity Input" min={1} max={99} />;
 }
 
 const grey = {

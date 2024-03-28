@@ -1,32 +1,35 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 
 import { Box, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchCategories } from "../../toolkitRedux/storeSlice";
 
 const Category = () => {
 
-    const [categories, setCategories] = useState([]);
+    const { categories } = useSelector(state => state.onlineStore);
 
-    useEffect(() => {
-        fetch("https://fakestoreapi.com/products/categories")
-            .then(res => res.json())
-            .then(json => setCategories(json));
-    }, []);
+    const dispatch = useDispatch();
 
     const capitalizeFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
 
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
+
     return (
         <Box sx={{ flexGrow: 1, margin: "25px 0" }} color="primary.main">
-            <Grid container>
-                <Grid item xs={12} sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "40px" }}>
+            <Grid container sx={{ borderBottom: "1px solid rgba(77, 77, 77, 0.3)" }}>
+                <Grid item xs={12} sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "40px", mb: "10px" }}>
                     <Typography sx={{ fontSize: "1rem" }}>
                         <Link to="/all products">
                             All products
                         </Link>
                     </Typography>
-                    {categories.map((item) => (
+                    {categories && categories.map((item) => (
                         <Link to={`/${item}`} key={item}>
                             <Typography key={item} sx={{ fontSize: "1rem" }}>{capitalizeFirstLetter(item)}</Typography>
                         </Link>

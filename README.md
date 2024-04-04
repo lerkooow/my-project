@@ -21,3 +21,7 @@ Create component ProductItemPage, UserAccountPage, UserCartPage... + correct Cat
 ### Correct component + add to cart (not completely)
 
 Correct component + add to cart (not completely)
+
+### Correct multiple components
+
+Correct multiple components

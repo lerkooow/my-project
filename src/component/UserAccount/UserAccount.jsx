@@ -1,25 +1,25 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserCart from "../UserCart/UserCart";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../toolkitRedux/storeSlice";
 
 const UserAccount = () => {
-    const [user, setUser] = useState({});
+
+    const { user } = useSelector(state => state.onlineStore);
     const userId = localStorage.getItem("userId");
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetch(`https://fakestoreapi.com/users/${userId}`)
-            .then(res => res.json())
-            .then(json => setUser(json))
-    }, [userId]);
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
         localStorage.removeItem("userId");
-        localStorage.removeItem("token");
+        localStorage.removeItem("userData");
+        dispatch(setUser(null));
         navigate("/user");
     };
+
 
     return (
         userId ? (
@@ -70,9 +70,7 @@ const UserAccount = () => {
                     </Box>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <Button
-                        onClick={handleLogout}
-                        sx={{ marginTop: "30px", backgroundColor: "background.button", color: 'text.accent1', width: "126px", height: "56px", borderRadius: "0" }}>
+                    <Button onClick={handleLogout} sx={{ marginTop: "30px", backgroundColor: "background.button", color: "text.accent1", width: "200px", height: "56px", '&:hover': { color: '#FFF', backgroundColor: 'background.accent3' } }}>
                         Log Out
                     </Button>
                 </Box>

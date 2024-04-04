@@ -14,6 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
+import Switches from '../Switches/Switches';
 
 export default function AnchorTemporaryDrawer() {
     const [state, setState] = useState({
@@ -29,37 +30,36 @@ export default function AnchorTemporaryDrawer() {
     };
 
     const list = (anchor) => (
-        <Box
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <List>
-                {['About us', 'Contact', 'Blog'].map((text) => (
-                    <ListItem key={text}>
-                        <ListItemButton>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-            <ListItemIcon>
-                <ListItemButton>
-                    <ListItemIcon sx={{ padding: "8px 16px" }}>
-                        <SearchIcon style={{ marginRight: "30px" }} />
-                        <Link to="/cart">
-                            <AddShoppingCartIcon style={{ marginRight: "30px" }} />
-                        </Link>
-                        <Link to="/user">
-                            <AccountCircleIcon />
-                        </Link>
-                    </ListItemIcon>
-                </ListItemButton>
-            </ListItemIcon>
-            <Divider />
-            <List>
-            </List>
-        </Box >
+        <Box color="primary.main">
+            <Box role="presentation" onClick={toggleDrawer(anchor, false)} onKeyDown={toggleDrawer(anchor, false)}>
+                <List>
+                    {['About us', 'Contact', 'Blog'].map((text) => (
+                        <ListItem key={text}>
+                            <ListItemButton>
+                                <ListItemText primary={text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+                <ListItemIcon>
+                    <ListItemButton>
+                        <ListItemIcon sx={{ color: "primary.main", padding: "8px 16px" }}>
+                            <SearchIcon style={{ marginRight: "30px" }} />
+                            <Link to="/cart">
+                                <AddShoppingCartIcon style={{ marginRight: "30px" }} />
+                            </Link>
+                            <Link to="/user">
+                                <AccountCircleIcon />
+                            </Link>
+                        </ListItemIcon>
+                    </ListItemButton>
+                </ListItemIcon>
+                <Divider />
+                <List>
+                </List>
+            </Box >
+            <Switches />
+        </Box>
     );
 
     return (

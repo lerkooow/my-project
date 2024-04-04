@@ -76,7 +76,7 @@ export const greyTheme = createTheme({
             accent2: "#9c9898",
             accent3: "#1e1e1e",
             accent4: "rgba(57, 49, 49, 0.1)",
-            paper: "rgba(169, 166, 166, 0.561)",
+            paper: "rgb(169, 166, 166)",
             button: "#333333"
         },
         text: {

@@ -7,7 +7,7 @@ import BrandDifferent from "../BrandDifferent/BrandDifferent";
 import JoinForm from "../JoinForm/JoinForm";
 import InfoBanner from "../InfoBanner/InfoBanner";
 import Footer from "../Footer/Footer";
-import NewCategoryComponent from "../NewElectronics/NewElectronics";
+import NewCategoryComponent from "../NewCategoryComponent/NewCategoryComponent";
 
 import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";

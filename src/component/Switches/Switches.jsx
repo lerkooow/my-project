@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { switchesColor } from "../../toolkitRedux/storeSlice";
 import { Box, FormControl, NativeSelect } from "@mui/material";
 import ContrastIcon from '@mui/icons-material/Contrast';
+import { switchesColor } from "../../features/user/userSlice";
 
 const Switches = () => {
-    const { switches } = useSelector(state => state.onlineStore);
+    const { switches } = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 

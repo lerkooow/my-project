@@ -9,7 +9,7 @@ import ProductsHome from "../ProductsHome/ProductsHome";
 
 const Products = () => {
 
-    const { switches } = useSelector(state => state.onlineStore)
+    const { switches } = useSelector(state => state.user)
 
     return (
         <Box sx={{ backgroundColor: switches === "light" ? lightTheme.palette.background.default : switches === "dark" ? darkTheme.palette.background.default : greyTheme.palette.background.default }}>

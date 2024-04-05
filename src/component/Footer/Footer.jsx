@@ -16,7 +16,7 @@ const ourCompany = ["About us", "Vacancies", "Contact us", "Privacy", "Returns p
 
 const Footer = () => {
 
-    const { categories } = useSelector(state => state.onlineStore);
+    const { categories } = useSelector(state => state.products);
 
     return (
         <Grid container sx={{ color: "#FFF", backgroundColor: "background.accent3" }}>
@@ -44,9 +44,9 @@ const Footer = () => {
                         All products
                     </Typography>
                 </Link>
-                {categories && categories.map((item) => (
-                    <Link to={`/${item}`} key={item}>
-                        <Typography key={item} variant="subtitle2">
+                {categories && categories.map((item, index) => (
+                    <Link to={`/${item}`} key={index}>
+                        <Typography variant="subtitle2">
                             {capitalizeFirstLetter(item)}
                         </Typography>
                     </Link>

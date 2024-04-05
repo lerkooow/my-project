@@ -2,11 +2,12 @@ import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import UserCart from "../UserCart/UserCart";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../toolkitRedux/storeSlice";
+import { fetchUser } from "../../features/user/userSlice";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const UserAccount = () => {
 
-    const { user } = useSelector(state => state.onlineStore);
+    const { user, isLoading } = useSelector(state => state.user);
     const userId = localStorage.getItem("userId");
 
     const navigate = useNavigate();
@@ -16,10 +17,9 @@ const UserAccount = () => {
     const handleLogout = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("userData");
-        dispatch(setUser(null));
+        dispatch(fetchUser(null));
         navigate("/user");
     };
-
 
     return (
         userId ? (
@@ -28,46 +28,54 @@ const UserAccount = () => {
                     User Account Details
                 </Typography>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "15px" }} >
-                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                        <Typography sx={{ padding: "10px" }}>
-                            Your Email:
-                        </Typography>
-                        <Typography sx={{ padding: "10px" }}>
-                            {user.email}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                        <Typography sx={{ padding: "10px" }}>
-                            Your Username:
-                        </Typography>
-                        <Typography sx={{ padding: "10px" }}>
-                            {user.username}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                        <Typography sx={{ padding: "10px" }}>
-                            Your First Name:
-                        </Typography>
-                        <Typography sx={{ padding: "10px" }}>
-                            {user.name && user.name.firstname}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                        <Typography sx={{ padding: "10px" }}>
-                            Your Last Name:
-                        </Typography>
-                        <Typography sx={{ padding: "10px" }}>
-                            {user.name && user.name.lastname}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                        <Typography sx={{ padding: "10px" }}>
-                            Your Phone:
-                        </Typography>
-                        <Typography sx={{ padding: "10px" }}>
-                            {user.phone}
-                        </Typography>
-                    </Box>
+                    {isLoading ? (
+                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <>
+                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                <Typography sx={{ padding: "10px" }}>
+                                    Your Email:
+                                </Typography>
+                                <Typography sx={{ padding: "10px" }}>
+                                    {user.email}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                <Typography sx={{ padding: "10px" }}>
+                                    Your Username:
+                                </Typography>
+                                <Typography sx={{ padding: "10px" }}>
+                                    {user.username}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                <Typography sx={{ padding: "10px" }}>
+                                    Your First Name:
+                                </Typography>
+                                <Typography sx={{ padding: "10px" }}>
+                                    {user.name && user.name.firstname}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                <Typography sx={{ padding: "10px" }}>
+                                    Your Last Name:
+                                </Typography>
+                                <Typography sx={{ padding: "10px" }}>
+                                    {user.name && user.name.lastname}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                <Typography sx={{ padding: "10px" }}>
+                                    Your Phone:
+                                </Typography>
+                                <Typography sx={{ padding: "10px" }}>
+                                    {user.phone}
+                                </Typography>
+                            </Box>
+                        </>
+                    )}
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <Button onClick={handleLogout} sx={{ marginTop: "30px", backgroundColor: "background.button", color: "text.accent1", width: "200px", height: "56px", '&:hover': { color: '#FFF', backgroundColor: 'background.accent3' } }}>

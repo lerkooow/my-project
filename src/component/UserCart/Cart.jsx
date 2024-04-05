@@ -2,21 +2,21 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteToCart, fetchCart, fetchCartUser, updateCart } from "../../toolkitRedux/storeSlice";
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Link } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
+import { deleteToCart, fetchCart, fetchCartUser, updateCart } from "../../features/cart/cartSlice";
 
-const Cart = ({ userId }) => {
+const Cart = () => {
     const [totalAmount, setTotalAmount] = useState(0);
 
-    const { cartUser, cart } = useSelector(state => state.onlineStore)
+    const { cartUser, cart } = useSelector(state => state.cart);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchCart(userId));
-    }, [dispatch, userId]);
+        dispatch(fetchCart());
+    }, [dispatch]);
 
     useEffect(() => {
         if (!cart || !cart.products) return;
@@ -91,8 +91,8 @@ const Cart = ({ userId }) => {
                 const total = quantity * product.price;
 
                 return (
-                    cart.length !== 0 ? (
-                        <Grid container key={product.title} sx={{ display: "flex", alignItems: { xs: "flex-start", sm: "center" }, flexDirection: { xs: "column", sm: "row" }, borderBottom: "1px solid rgba(77, 77, 77, 0.3)", padding: "10px 0" }}>
+                    cart && cart.length !== 0 ? (
+                        <Grid container key={product.id} sx={{ display: "flex", alignItems: { xs: "flex-start", sm: "center" }, flexDirection: { xs: "column", sm: "row" }, borderBottom: "1px solid rgba(77, 77, 77, 0.3)", padding: "10px 0" }}>
                             <Grid item xs={12} sm={4} sx={{ display: "flex" }}>
                                 <img src={product.image} style={{ minWidth: "50px", height: "50px", textAlign: { xs: "center" } }} alt={product.title} />
                                 <Link to={`/${product.category}/${product.id}`}>
@@ -110,7 +110,7 @@ const Cart = ({ userId }) => {
                             </Grid>
                         </Grid>
                     ) : (
-                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+                        <Box key={product.id} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
                             <CircularProgress />
                         </Box>
                     )

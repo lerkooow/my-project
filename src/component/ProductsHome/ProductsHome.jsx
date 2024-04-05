@@ -11,9 +11,8 @@ import allBanner from "./all.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
-import { fetchProducts } from "../../toolkitRedux/storeSlice";
-
 import capitalizeFirstLetter from "../capitalizeFirstLetter/capitalizeFirstLetter";
+import { fetchProducts } from "../../features/products/productsSlice";
 
 const ProductsHome = () => {
     const [sorting, setSorting] = useState("");
@@ -22,7 +21,7 @@ const ProductsHome = () => {
 
     const { category } = useParams();
 
-    const { products, isLoading } = useSelector(state => state.onlineStore);
+    const { products, isLoading } = useSelector(state => state.products);
 
     const dispatch = useDispatch();
 
@@ -46,7 +45,6 @@ const ProductsHome = () => {
     const handleLimitProducts = () => setLimit((limit) => limit + 4);
 
     useEffect(() => {
-        console.log(sorting, categoryProducts, limit, categoryUrl);
         dispatch(fetchProducts({ sorting, categoryProducts, limit, categoryUrl }));
     }, [sorting, limit, categoryUrl, dispatch, categoryProducts]);
 

@@ -1,5 +1,5 @@
 const capitalizeFirstLetter = (str) => {
-    if (!str) return "";
+    if (typeof str !== 'string') return "";
     return str.charAt(0).toUpperCase() + str.slice(1)
 }
 

@@ -16,11 +16,11 @@ import { lightTheme, darkTheme, greyTheme } from "../themes";
 
 function App() {
 
-  const { switches } = useSelector(state => state.onlineStore);
+  const { switches } = useSelector(state => state.user);
 
-  const newCategoryComponent = ["electronics", "men's clothing"];
+  const newCategoryComponents = ["electronics", "men's clothing"];
 
-  const componentCategory = newCategoryComponent.map(category => (
+  const componentCategories = newCategoryComponents.map(category => (
     <NewCategoryComponent category={category} key={category} />
   ))
 
@@ -33,13 +33,14 @@ function App() {
         </Box>
         <HomeBanner />
         <BrandDifferent />
-        {componentCategory}
+        {componentCategories}
         <JoinForm />
         <InfoBanner />
         <Footer />
       </ThemeProvider>
     </Box >
   )
+
 }
 
 export default App;

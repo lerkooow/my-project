@@ -1,10 +1,10 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../toolkitRedux/storeSlice";
 import Cart from "./Cart";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { loginUser } from "../../features/user/userSlice";
 
 const UserCart = () => {
     const [user, setUser] = useState([]);

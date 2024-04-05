@@ -25,3 +25,7 @@ Correct component + add to cart (not completely)
 ### Correct multiple components
 
 Correct multiple components
+
+### Change in structure RTK
+
+Change in structure RTK

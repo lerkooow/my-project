@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 import Switches from '../Switches/Switches';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchUser } from '../../toolkitRedux/storeSlice';
+import { fetchUser } from '../../features/user/userSlice';
 
 const Header = () => {
 
-    const { user } = useSelector(state => state.onlineStore);
+    const { user } = useSelector(state => state.user);
 
     const userId = localStorage.getItem("userId");
 

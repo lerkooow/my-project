@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { addToCart } from "../../toolkitRedux/storeSlice";
 import CircularProgress from '@mui/material/CircularProgress';
+import { addToCart } from "../../features/cart/cartSlice";
 
 const ProductItem = () => {
 

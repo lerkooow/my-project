@@ -2,12 +2,14 @@
 import { useEffect, useState } from "react";
 import { Box, Grid, Typography, Card, CardContent, Button } from '@mui/material';
 import { Link } from "react-router-dom";
-import axios from "axios";
 import capitalizeFirstLetter from "../capitalizeFirstLetter/capitalizeFirstLetter";
 import CircularProgress from '@mui/material/CircularProgress';
+import axios from "axios";
 
 const NewCategoryComponent = ({ category }) => {
+
     const [newComponent, setNewComponent] = useState([]);
+    console.log("🚀 ~ NewCategoryComponent ~ newComponent:", newComponent)
 
     useEffect(() => {
         const fetchData = async () => {

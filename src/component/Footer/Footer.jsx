@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
@@ -10,13 +9,14 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 
 import capitalizeFirstLetter from "../capitalizeFirstLetter/capitalizeFirstLetter";
+import { useFetchCategoriesQuery } from "../../features/api/apiSlice";
 
 const menu = ["New arrivals", "Best sellers", "Recently viewed", "Popular this week", "All products"];
 const ourCompany = ["About us", "Vacancies", "Contact us", "Privacy", "Returns policy"];
 
 const Footer = () => {
 
-    const { categories } = useSelector(state => state.products);
+    const { data = [] } = useFetchCategoriesQuery();
 
     return (
         <Grid container sx={{ color: "#FFF", backgroundColor: "background.accent3" }}>
@@ -44,7 +44,7 @@ const Footer = () => {
                         All products
                     </Typography>
                 </Link>
-                {categories && categories.map((item, index) => (
+                {data && data.map((item, index) => (
                     <Link to={`/${item}`} key={index}>
                         <Typography variant="subtitle2">
                             {capitalizeFirstLetter(item)}

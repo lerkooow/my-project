@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, Grid, Typography } from '@mui/material';
 
 import AnchorTemporaryDrawer from '../Drawer/Drawer';
@@ -7,21 +8,14 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
 import Switches from '../Switches/Switches';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchUser } from '../../features/user/userSlice';
+import { useFetchUserQuery } from '../../features/api/apiSlice';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
 
-    const { user } = useSelector(state => state.user);
-
-    const userId = localStorage.getItem("userId");
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchUser(userId));
-    }, [dispatch, userId]);
+    const { userId } = useSelector(state => state.user);
+    const { data = null } = useFetchUserQuery(userId);
+    const username = data ? data.username : null;
 
     return (
         <Box sx={{ flexGrow: 1, pt: "30px" }}>
@@ -46,8 +40,8 @@ const Header = () => {
                         <AddShoppingCartIcon />
                     </Link>
                     <Link to="/user">
-                        {user ? (
-                            <Typography sx={{ mr: "51px" }}>{user.username}</Typography>
+                        {userId ? (
+                            <Typography sx={{ mr: "51px" }}>{username}</Typography>
                         ) : (
                             <AccountCircleIcon style={{ marginRight: "51px" }} />
                         )}

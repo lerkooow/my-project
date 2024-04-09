@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const initialState = {
     switches: JSON.parse(localStorage.getItem('switches')) || 'light',
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    userId: localStorage.getItem('userId') || null,
 };
 
 export const loginUser = createAsyncThunk(
@@ -28,21 +28,6 @@ export const loginUser = createAsyncThunk(
     }
 );
 
-
-export const fetchUser = createAsyncThunk(
-    'user/fetchUser',
-    async (userId, thunkAPI) => {
-        try {
-            const response = await axios.get(`https://fakestoreapi.com/users/${userId}`);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching users:', error.message);
-            return thunkAPI.rejectWithValue(error.message);
-        }
-    }
-);
-
-
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -50,22 +35,13 @@ const userSlice = createSlice({
         switchesColor(state, action) {
             state.switches = action.payload;
             localStorage.setItem('switches', JSON.stringify(state.switches));
+        },
+        setUserId(state, action) {
+            state.userId = action.payload;
+            localStorage.setItem('userId', state.userId);
         }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(fetchUser.pending, (state) => {
-            state.isLoading = true;
-        });
-        builder.addCase(fetchUser.fulfilled, (state, { payload }) => {
-            state.user = payload;
-            state.isLoading = false;
-        });
-        builder.addCase(fetchUser.rejected, (state) => {
-            state.isLoading = false;
-        });
-    },
+    }
 });
 
 export default userSlice.reducer;
-export const { switchesColor } = userSlice.actions;
-
+export const { switchesColor, setUserId } = userSlice.actions;

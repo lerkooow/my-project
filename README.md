@@ -29,3 +29,7 @@ Correct multiple components
 ### Change in structure RTK
 
 Change in structure RTK
+
+### Correct multiple components + apiSlice with fetchBaseQuery
+
+Correct multiple components + apiSlice with fetchBaseQuery

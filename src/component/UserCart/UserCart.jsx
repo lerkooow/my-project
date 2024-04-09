@@ -1,16 +1,17 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cart from "./Cart";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { loginUser } from "../../features/user/userSlice";
+import { loginUser, setUserId } from "../../features/user/userSlice";
 
 const UserCart = () => {
     const [user, setUser] = useState([]);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const userId = localStorage.getItem('userId');
+
+    const { userId } = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 
@@ -31,7 +32,7 @@ const UserCart = () => {
             alert('Invalid username or password');
         } else {
             dispatch(loginUser({ username, password }));
-            localStorage.setItem('userId', matchedUser.id);
+            dispatch(setUserId(matchedUser.id));
             navigate("/");
         }
     }

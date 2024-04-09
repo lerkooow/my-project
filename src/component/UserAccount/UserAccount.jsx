@@ -1,15 +1,15 @@
+
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import UserCart from "../UserCart/UserCart";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../../features/user/userSlice";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useFetchUserQuery } from "../../features/api/apiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserId } from "../../features/user/userSlice";
 
 const UserAccount = () => {
-
-    const { user, isLoading } = useSelector(state => state.user);
-    const userId = localStorage.getItem("userId");
-
+    const { userId } = useSelector(state => state.user);
+    const { data = null, isLoading } = useFetchUserQuery(userId);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const UserAccount = () => {
     const handleLogout = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("userData");
-        dispatch(fetchUser(null));
+        dispatch(setUserId(null));
         navigate("/user");
     };
 
@@ -34,46 +34,50 @@ const UserAccount = () => {
                         </Box>
                     ) : (
                         <>
-                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                                <Typography sx={{ padding: "10px" }}>
-                                    Your Email:
-                                </Typography>
-                                <Typography sx={{ padding: "10px" }}>
-                                    {user.email}
-                                </Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                                <Typography sx={{ padding: "10px" }}>
-                                    Your Username:
-                                </Typography>
-                                <Typography sx={{ padding: "10px" }}>
-                                    {user.username}
-                                </Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                                <Typography sx={{ padding: "10px" }}>
-                                    Your First Name:
-                                </Typography>
-                                <Typography sx={{ padding: "10px" }}>
-                                    {user.name && user.name.firstname}
-                                </Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                                <Typography sx={{ padding: "10px" }}>
-                                    Your Last Name:
-                                </Typography>
-                                <Typography sx={{ padding: "10px" }}>
-                                    {user.name && user.name.lastname}
-                                </Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
-                                <Typography sx={{ padding: "10px" }}>
-                                    Your Phone:
-                                </Typography>
-                                <Typography sx={{ padding: "10px" }}>
-                                    {user.phone}
-                                </Typography>
-                            </Box>
+                            {data && (
+                                <>
+                                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                        <Typography sx={{ padding: "10px" }}>
+                                            Your Email:
+                                        </Typography>
+                                        <Typography sx={{ padding: "10px" }}>
+                                            {data.email}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                        <Typography sx={{ padding: "10px" }}>
+                                            Your Username:
+                                        </Typography>
+                                        <Typography sx={{ padding: "10px" }}>
+                                            {data.username}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                        <Typography sx={{ padding: "10px" }}>
+                                            Your First Name:
+                                        </Typography>
+                                        <Typography sx={{ padding: "10px" }}>
+                                            {data.name && data.name.firstname}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                        <Typography sx={{ padding: "10px" }}>
+                                            Your Last Name:
+                                        </Typography>
+                                        <Typography sx={{ padding: "10px" }}>
+                                            {data.name && data.name.lastname}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: "flex", justifyContent: "space-between", borderRadius: "20px" }} backgroundColor="background.default">
+                                        <Typography sx={{ padding: "10px" }}>
+                                            Your Phone:
+                                        </Typography>
+                                        <Typography sx={{ padding: "10px" }}>
+                                            {data.phone}
+                                        </Typography>
+                                    </Box>
+                                </>
+                            )}
                         </>
                     )}
                 </Box>
@@ -92,5 +96,4 @@ const UserAccount = () => {
 }
 
 export default UserAccount;
-
 

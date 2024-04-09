@@ -9,7 +9,6 @@ import axios from "axios";
 const NewCategoryComponent = ({ category }) => {
 
     const [newComponent, setNewComponent] = useState([]);
-    console.log("🚀 ~ NewCategoryComponent ~ newComponent:", newComponent)
 
     useEffect(() => {
         const fetchData = async () => {

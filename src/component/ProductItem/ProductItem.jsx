@@ -62,10 +62,10 @@ const ProductItem = () => {
                 </Grid>
                 <Grid item xs={12} md={7} sx={{ height: "100%" }}>
                     <Box sx={{ p: "20px", backgroundColor: "background.accent4" }}>
-                        <Typography sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" }, display: "flex", alignItems: "center" }}>
+                        <Box sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" }, display: "flex", alignItems: "center" }}>
                             <Rating name="read-only" value={productItem.rating.rate} readOnly />
                             <Typography sx={{ ml: "10px" }}>{productItem.rating.rate}</Typography>
-                        </Typography>
+                        </Box>
                         <Typography>
                             Sold: {productItem.rating.count}
                         </Typography>

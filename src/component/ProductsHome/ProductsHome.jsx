@@ -7,12 +7,10 @@ import jewBanner from "./jew.jpg";
 import mensBanner from "./mens.jpg";
 import womensBanner from "./womens.jpg";
 import allBanner from "./all.jpg";
-
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
 import capitalizeFirstLetter from "../capitalizeFirstLetter/capitalizeFirstLetter";
-import { fetchProducts } from "../../features/products/productsSlice";
+import { useFetchProductsQuery } from "../../features/api/apiSlice";
 
 const ProductsHome = () => {
     const [sorting, setSorting] = useState("");
@@ -21,32 +19,27 @@ const ProductsHome = () => {
 
     const { category } = useParams();
 
-    const { products, isLoading } = useSelector(state => state.products);
-
-    const dispatch = useDispatch();
-
     const categoryUrl = category === "all products" ? "" : "category";
     const categoryProducts = category === "all products" ? "" : category;
+
+    const { data = [], isLoading } = useFetchProductsQuery({ sorting, categoryProducts, limit, categoryUrl })
 
     useEffect(() => {
         setLimit(4);
     }, [category]);
 
     useEffect(() => {
-        if (products.length < limit) {
+        if (data.length < limit) {
             setDisableButton(true);
         } else {
             setDisableButton(false);
         }
-    }, [products, limit]);
+    }, [data, limit]);
 
     const handleSortingChange = (e) => setSorting(e.target.value);
 
     const handleLimitProducts = () => setLimit((limit) => limit + 4);
 
-    useEffect(() => {
-        dispatch(fetchProducts({ sorting, categoryProducts, limit, categoryUrl }));
-    }, [sorting, limit, categoryUrl, dispatch, categoryProducts]);
 
     const banner = category === "electronics" ? electBanner :
         category === "jewelery" ? jewBanner :
@@ -77,7 +70,7 @@ const ProductsHome = () => {
                                 </Box>
                             </Grid>
                         ) : (
-                            products.length > 0 && products.map(item => (
+                            data.length > 0 && data.map(item => (
                                 <Grid key={item.id} item xs={12} sm={6} md={4} lg={3} sx={{ mb: "20px" }}>
                                     <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
                                         <Box sx={{ backgroundImage: `url(${item.image})`, height: 0, paddingTop: '100%', backgroundPosition: "center center", backgroundSize: "contain" }}></Box>

@@ -42,3 +42,7 @@ formik Login Form
 
 Correct install axios
 
+### netlify.toml
+
+Add netlify.toml
+

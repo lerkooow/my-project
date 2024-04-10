@@ -1,4 +1,4 @@
 [[redirects]]
-from = “https://master--avion-store.netlify.app//*”
-to = “/index.html”
+from = "https://master--avion-store.netlify.app/*"
+to = "/index.html"
 status = 200

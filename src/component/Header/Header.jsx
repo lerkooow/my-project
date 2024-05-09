@@ -27,23 +27,23 @@ const Header = () => {
                         </Typography>
                     </Link>
                 </Grid>
-                <Grid item xs={8} sx={{ display: { xs: "flex", md: "none" }, justifyContent: "flex-end", pr: "20px", color: "primary.main" }}>
+                <Grid item xs={8} sx={{ display: { xs: "flex", md: "none" }, justifyContent: "flex-end", pr: "20px", color: "primary.main" }} data-testid="drawer">
                     <AnchorTemporaryDrawer />
                 </Grid>
-                <Grid item xs={8} sx={{ display: { xs: "none", md: "flex" }, gap: "30px", justifyContent: "flex-end", alignItems: "center", color: "primary.main" }}>
+                <Grid item xs={8} sx={{ display: { xs: "none", md: "flex" }, gap: "30px", justifyContent: "flex-end", alignItems: "center", color: "primary.main" }} data-testid="link">
                     <Switches />
                     <Typography variant='subtitle1'>About us</Typography>
                     <Typography variant='subtitle1'>Contact</Typography>
                     <Typography variant='subtitle1'>Blog</Typography>
                     <SearchIcon />
                     <Link to="/cart">
-                        <AddShoppingCartIcon />
+                        <AddShoppingCartIcon data-testid="cart" />
                     </Link>
                     <Link to="/user">
-                        {userId ? (
-                            <Typography sx={{ mr: "51px" }}>{username}</Typography>
+                        {userId !== "no user" ? (
+                            <Typography sx={{ mr: "51px" }} data-testid="username">{username}</Typography>
                         ) : (
-                            <AccountCircleIcon style={{ marginRight: "51px" }} />
+                            <AccountCircleIcon style={{ marginRight: "51px" }} data-testid="avatar" />
                         )}
                     </Link>
                 </Grid>

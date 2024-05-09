@@ -17,8 +17,8 @@ const HomeBanner = () => {
                             Update your wardrobe with our collection of stylish women's clothing!
                         </Typography>
                         <Button sx={{ display: { xs: "none", md: "block" }, color: "#FFF", backgroundColor: "#FFFFFF8F", '&:hover': { color: '#000', backgroundColor: 'white' }, mb: "20px", height: "56px", width: "192px" }}>
-                            <Link to={"/women's clothing"}>
-                                View collection
+                            <Link to={"/women's clothing"} >
+                                <Typography>View collection</Typography>
                             </Link>
                         </Button>
                         <Typography sx={{ fontSize: { xs: "1rem", sm: "1.1rem", md: "1.125rem" } }}>
@@ -28,7 +28,7 @@ const HomeBanner = () => {
                         </Typography>
                         <Button sx={{ display: { xs: "block", md: "none" }, color: "#FFF", '&:hover': { color: '#000', backgroundColor: 'white' }, backgroundColor: "#FFFFFF8F", width: "100%", height: '56px' }} >
                             <Link to={"/women's clothing"}>
-                                View collection
+                                <Typography>View collection</Typography>
                             </Link>
                         </Button>
                     </Grid>

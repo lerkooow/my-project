@@ -26,15 +26,15 @@ const NewCategoryComponent = ({ category }) => {
         <Box sx={{ flexGrow: 1, m: { xs: "30px 25px", md: "30px 80px" }, color: "text.primary" }} >
             <Typography sx={{ m: "100px 0 36px 0" }} variant="h4">New {capitalizeFirstLetter(category)}</Typography>
             {newComponent.length === 0 ? (
-                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }} data-testid="circular">
                     <CircularProgress />
                 </Box>
             ) : (
-                <Grid container spacing={3}>
+                <Grid container spacing={3} >
                     {newComponent && newComponent.map((item, index) => (
-                        <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                        <Grid key={index} item xs={12} sm={6} md={4} lg={3} data-testid={item.category}>
                             <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-                                <div style={{ backgroundImage: `url(${item.image})`, height: 0, paddingTop: '100%', backgroundPosition: "center center", backgroundSize: "contain" }}></div>
+                                <div style={{ backgroundImage: `url(${item.image})`, height: 0, paddingTop: '100%', backgroundPosition: "center center", backgroundSize: "contain" }} data-testid="new-image"></div>
                                 <CardContent style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                     <Link to={`/${category}/${item.id}`}>
                                         <Typography gutterBottom sx={{ color: "text.secondary" }} variant="h5">

@@ -17,12 +17,12 @@ const UserAccount = () => {
     const handleLogout = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("userData");
-        dispatch(setUserId(null));
-        navigate("/user");
+        dispatch(setUserId("no user"));
+        navigate("/");
     };
 
     return (
-        userId ? (
+        userId !== "no user" ? (
             <Box sx={{ maxWidth: 600, margin: "20px auto", padding: "30px" }} backgroundColor="background.accent4" color="primary.main">
                 <Typography variant="h4" gutterBottom sx={{ textAlign: "center", mb: "30px" }}>
                     User Account Details

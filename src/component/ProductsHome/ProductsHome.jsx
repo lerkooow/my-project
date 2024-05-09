@@ -50,7 +50,7 @@ const ProductsHome = () => {
     return (
         <Box>
             <Box sx={{ position: "relative", textAlign: "center", color: "white", minHeight: "223px" }}>
-                <img src={banner} style={{ objectFit: "cover", width: "100%", height: "209px" }} alt="Electronics Banner" />
+                <img src={banner} style={{ objectFit: "cover", width: "100%", height: "209px" }} alt={category} />
                 <Typography sx={{ position: "absolute", bottom: "35px", left: "80px" }} variant="h3">{capitalizeFirstLetter(category)}</Typography>
             </Box>
             <Box sx={{ m: "0 80px" }}>
@@ -76,7 +76,7 @@ const ProductsHome = () => {
                                         <Box sx={{ backgroundImage: `url(${item.image})`, height: 0, paddingTop: '100%', backgroundPosition: "center center", backgroundSize: "contain" }}></Box>
                                         <CardContent style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                             <Box>
-                                                <Link to={`/ ${item.category} / ${item.id}`}>
+                                                <Link to={`/${item.category}/${item.id}`}>
                                                     <Typography gutterBottom color="text.secondary" variant="h5">
                                                         {item.title}
                                                     </Typography>
@@ -95,8 +95,10 @@ const ProductsHome = () => {
                     </Grid>
                 </Grid>
                 <Box sx={{ display: "flex" }}>
-                    <Button onClick={handleLimitProducts} sx={{ display: disableButton ? "none" : "block", m: "50px auto", backgroundColor: "background.button", color: "text.accent1", width: "200px", height: "56px", '&:hover': { color: '#FFF', backgroundColor: 'background.accent3' } }}>See more</Button>
-                </Box>
+                    <Button onClick={handleLimitProducts} sx={{ display: disableButton ? "none" : "block", m: "50px auto", backgroundColor: "background.button", color: "text.accent1", width: "200px", height: "56px", '&:hover': { color: '#FFF', backgroundColor: 'background.accent3' } }}>See more</Button>                </Box>
+            </Box>
+            <Box>
+                <Typography variant="h6" sx={{ textAlign: "center", mb: "30px" }}>Products: 1 - {limit}</Typography>
             </Box>
         </Box>
     );

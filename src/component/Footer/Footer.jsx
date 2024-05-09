@@ -11,7 +11,7 @@ import PinterestIcon from '@mui/icons-material/Pinterest';
 import capitalizeFirstLetter from "../capitalizeFirstLetter/capitalizeFirstLetter";
 import { useFetchCategoriesQuery } from "../../features/api/apiSlice";
 
-const menu = ["New arrivals", "Best sellers", "Recently viewed", "Popular this week", "All products"];
+const menu = ["New arrivals", "Best sellers", "Recently viewed", "Popular this week"];
 const ourCompany = ["About us", "Vacancies", "Contact us", "Privacy", "Returns policy"];
 
 const Footer = () => {
@@ -46,7 +46,7 @@ const Footer = () => {
                 </Link>
                 {data && data.map((item, index) => (
                     <Link to={`/${item}`} key={index}>
-                        <Typography variant="subtitle2">
+                        <Typography variant="subtitle2" data-testid="footer">
                             {capitalizeFirstLetter(item)}
                         </Typography>
                     </Link>

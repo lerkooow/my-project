@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, setUserId } from '../../features/user/userSlice';
 import axios from 'axios';
+import ModalWarning from "./ModalWarning";
 
 const validate = values => {
     const errors = {};
@@ -44,12 +45,14 @@ const LoginForm = () => {
         validate,
     });
 
+    const [open, setOpen] = useState(false);
+
     const handleLogin = (e) => {
         e.preventDefault();
         const { username, password } = formik.values;
         const matchedUser = user.find(u => u.username === username && u.password === password);
         if (!matchedUser) {
-            alert('Invalid username or password');
+            setOpen(true);
         } else {
             dispatch(loginUser({ username, password }));
             dispatch(setUserId(matchedUser.id));
@@ -89,6 +92,7 @@ const LoginForm = () => {
             <Button type="submit" variant="contained" color="primary" style={{ margin: "20px auto", minWidth: "150px", height: "56px" }}>
                 Log In
             </Button>
+            <ModalWarning open={open} handleClose={() => setOpen(false)} />
         </form>
     );
 };

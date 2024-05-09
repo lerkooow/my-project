@@ -18,7 +18,7 @@ function App() {
 
   const { switches } = useSelector(state => state.user);
 
-  const newCategoryComponents = ["electronics", "men's clothing"];
+  const newCategoryComponents = ["electronics", "jewelery"];
 
   const componentCategories = newCategoryComponents.map(category => (
     <NewCategoryComponent category={category} key={category} />

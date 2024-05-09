@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const initialState = {
     switches: JSON.parse(localStorage.getItem('switches')) || 'light',
-    userId: localStorage.getItem('userId') || null,
+    userId: localStorage.getItem('userId') || "no user",
 };
 
 export const loginUser = createAsyncThunk(

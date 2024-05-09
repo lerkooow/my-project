@@ -11,7 +11,7 @@ import { deleteToCart, fetchCart, fetchCartUser, updateCart } from "../../featur
 const Cart = () => {
     const [totalAmount, setTotalAmount] = useState(0);
 
-    const { cartUser, cart, isLoading } = useSelector(state => state.cart);
+    const { cartUser, cart } = useSelector(state => state.cart);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -91,7 +91,7 @@ const Cart = () => {
                 const total = quantity * product.price;
 
                 return (
-                    cart && cart.length !== 0 && isLoading === false ? (
+                    cart && cart.length !== 0 ? (
                         <Grid container key={product.id} sx={{ display: "flex", alignItems: { xs: "flex-start", sm: "center" }, flexDirection: { xs: "column", sm: "row" }, borderBottom: "1px solid rgba(77, 77, 77, 0.3)", padding: "10px 0" }}>
                             <Grid item xs={12} sm={4} sx={{ display: "flex" }}>
                                 <img src={product.image} style={{ minWidth: "50px", height: "50px", textAlign: { xs: "center" } }} alt={product.title} />
@@ -106,7 +106,7 @@ const Cart = () => {
                             </Grid>
                             <Grid item xs={12} sm={4} sx={{ textAlign: "end", margin: '0 0 0 auto' }}>
                                 <Typography>£{total.toFixed(2)}</Typography>
-                                <DeleteOutlineIcon onClick={() => handleDeleteClick(product.id)} />
+                                <DeleteOutlineIcon onClick={() => handleDeleteClick(product.id)} data-testid="delete" />
                             </Grid>
                         </Grid>
                     ) : (

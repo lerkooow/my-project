@@ -3,6 +3,8 @@ import { FC } from "react";
 
 import { Box, Grid, Typography } from "@mui/material";
 
+import infoBanner from "./InfoBanner.jpg";
+
 const InfoBanner: FC = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -37,7 +39,7 @@ const InfoBanner: FC = () => {
           </Box>
         </Grid>
         <Grid item xs={4} sx={{ display: { xs: "none", md: "block" } }}>
-          <img src={`src/component/InfoBanner/InfoBanner.jpg`} style={{ width: "100%", height: "603px" }} />
+          <img src={infoBanner} style={{ width: "100%", height: "603px" }} />
         </Grid>
       </Grid>
     </Box>

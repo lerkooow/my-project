@@ -8,6 +8,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import capitalizeFirstLetter from "../capitalizeFirstLetter/capitalizeFirstLetter";
 import { useFetchProductsQuery } from "../../features/api/apiSlice";
 
+import all from "./all.jpg";
+import elect from "./elect.jpg";
+import jew from "./jew.jpg";
+import mens from "./mens.jpg";
+import womens from "./womens.jpg";
+
 const ProductsHome: FC = () => {
   const [sorting, setSorting] = useState<string>("");
   const [limit, setLimit] = useState<number>(4);
@@ -37,18 +43,27 @@ const ProductsHome: FC = () => {
 
   const handleLimitProducts = () => setLimit((limit) => limit + 4);
 
-  const banner: string =
-    category === "electronics"
-      ? `src/component/ProductsHome/elect.jpg`
-      : category === "jewelery"
-        ? `src/component/ProductsHome/jew.jpg`
-        : category === "men's clothing"
-          ? `src/component/ProductsHome/mens.jpg`
-          : category === "women's clothing"
-            ? `src/component/ProductsHome/womens.jpg`
-            : category === "all products"
-              ? `src/component/ProductsHome/all.jpg`
-              : "";
+  let banner: string;
+
+  switch (category) {
+    case "electronics":
+      banner = elect;
+      break;
+    case "jewelery":
+      banner = jew;
+      break;
+    case "men's clothing":
+      banner = mens;
+      break;
+    case "women's clothing":
+      banner = womens;
+      break;
+    case "all products":
+      banner = all;
+      break;
+    default:
+      banner = "";
+  }
 
   return (
     <Box>

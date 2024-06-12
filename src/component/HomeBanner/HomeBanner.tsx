@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 import { Box, Button, Grid, Typography } from "@mui/material";
 
+import homeBanner from "./HomeBanner.jpg";
+
 const HomeBanner: FC = () => {
   return (
     <Box sx={{ flexGrow: 1, m: { xs: "0", md: "30px 80px" }, color: "#FFF" }}>
@@ -68,11 +70,7 @@ const HomeBanner: FC = () => {
           </Grid>
         </Grid>
         <Grid item lg={4} sx={{ display: { xs: "none", lg: "block" } }}>
-          <img
-            src={`src/component/HomeBanner/HomeBanner.jpg`}
-            style={{ width: "100%", height: "584px" }}
-            alt="Home Banner"
-          />
+          <img src={homeBanner} style={{ width: "100%", height: "584px" }} alt="Home Banner" />
         </Grid>
       </Grid>
     </Box>

@@ -1,39 +1,28 @@
-import React from "react";
-import { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-
 import { deleteToCart, fetchCart, fetchCartUser, updateCart } from "../../features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-}
-
-const Cart: FC = () => {
+const Cart = () => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
-  const { cartUser, cart } = useAppSelector((state) => state.cart);
+  const { userId } = useAppSelector((state) => state.user);
+  const { cartUser, cart, isLoading } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchCart());
-  }, [dispatch]);
+    if (userId) {
+      localStorage.setItem("currentUserId", userId);
+      dispatch(fetchCart(userId));
+    }
+  }, [dispatch, userId]);
 
   useEffect(() => {
-    if (!cart || !cart.products) return;
-    const productIds = cart.products.map((product) => product.productId);
-    dispatch(fetchCartUser(productIds));
+    if (cart && cart.products) {
+      const productIds = cart.products.map((product) => product.productId);
+      dispatch(fetchCartUser(productIds));
+    }
   }, [cart, dispatch]);
 
   useEffect(() => {
@@ -56,7 +45,7 @@ const Cart: FC = () => {
 
   const handleDecreaseQuantity = (productId: number) => {
     if (!cart) return;
-    const updatedCart = cart.products.map((item) => {
+    const updatedProducts = cart.products.map((item) => {
       if (item.productId === productId) {
         return {
           ...item,
@@ -65,12 +54,12 @@ const Cart: FC = () => {
       }
       return item;
     });
-    dispatch(updateCart({ products: updatedCart }));
+    dispatch(updateCart({ ...cart, products: updatedProducts }));
   };
 
   const handleIncreaseQuantity = (productId: number) => {
     if (!cart) return;
-    const updatedCart = cart.products.map((item) => {
+    const updatedProducts = cart.products.map((item) => {
       if (item.productId === productId) {
         return {
           ...item,
@@ -79,7 +68,7 @@ const Cart: FC = () => {
       }
       return item;
     });
-    dispatch(updateCart({ products: updatedCart }));
+    dispatch(updateCart({ ...cart, products: updatedProducts }));
   };
 
   return (
@@ -109,8 +98,8 @@ const Cart: FC = () => {
           </Typography>
         </Grid>
       </Grid>
-      {cartUser && cartUser.length > 0 && cart && cart.products.length > 0 ? (
-        cartUser.map((product: Product) => {
+      {!isLoading ? (
+        cartUser.map((product) => {
           const cartProduct = cart.products.find((item) => item.productId === product.id);
           const quantity = cartProduct ? cartProduct.quantity : 0;
           const total = quantity * product.price;
@@ -158,9 +147,15 @@ const Cart: FC = () => {
           <CircularProgress />
         </Box>
       )}
-      <Typography variant="h6" sx={{ margin: "30px 0", textAlign: "end" }}>
-        Subtotal: £{totalAmount.toFixed(2)}
-      </Typography>
+      {isLoading ? (
+        <Typography variant="h6" sx={{ margin: "30px 0", textAlign: "end" }}>
+          Subtotal: £ <CircularProgress />
+        </Typography>
+      ) : (
+        <Typography variant="h6" sx={{ margin: "30px 0", textAlign: "end" }}>
+          Subtotal: £{totalAmount.toFixed(2)}
+        </Typography>
+      )}
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Button
           sx={{

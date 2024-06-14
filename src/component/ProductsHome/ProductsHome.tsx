@@ -25,7 +25,6 @@ const ProductsHome: FC = () => {
   const categoryProducts = category === "all products" ? "" : category;
 
   const { data = [], isLoading } = useFetchProductsQuery({ sorting, categoryProducts, limit, categoryUrl });
-  console.log("🚀 ~ data:", data);
 
   useEffect(() => {
     setLimit(4);

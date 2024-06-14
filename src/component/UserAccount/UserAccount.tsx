@@ -8,6 +8,7 @@ import UserCart from "../UserCart/UserCart";
 import { useFetchUserQuery } from "../../features/api/apiSlice";
 import { setUserId } from "../../features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import { clearCartUser } from "../../features/cart/cartSlice";
 
 const UserAccount = () => {
   const { userId } = useAppSelector((state) => state.user);
@@ -17,10 +18,10 @@ const UserAccount = () => {
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("userData");
+    localStorage.clear();
     dispatch(setUserId(null));
     navigate("/user");
+    dispatch(clearCartUser());
   };
 
   return userId ? (

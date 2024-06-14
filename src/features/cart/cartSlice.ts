@@ -1,6 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
+interface CartProduct {
+  productId: number;
+  quantity: number;
+}
+
+interface Cart {
+  products: CartProduct[];
+}
+
 interface CartUser {
   id: number;
   title: string;
@@ -14,38 +23,32 @@ interface CartUser {
   };
 }
 
-interface Product {
-  productId: number;
-  quantity: number;
-}
-
 interface CartState {
-  cart: { products: Product[] } | null;
-  cartUser: CartUser[] | [];
+  cart: Cart;
+  cartUser: CartUser[];
   isLoading: boolean;
 }
 
-const userIdLocal = localStorage.getItem("userId");
-
 const initialState: CartState = {
-  cart: userIdLocal ? JSON.parse(localStorage.getItem(`cart-${userIdLocal}`) || "null") : { products: [] },
+  cart: { products: [] },
   cartUser: [],
   isLoading: false,
 };
 
-export const fetchCart = createAsyncThunk<{ products: Product[] }, void, { rejectValue: string }>(
+export const fetchCart = createAsyncThunk<Cart, string, { rejectValue: string }>(
   "cart/fetchCart",
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try {
-      const localStorageCart = localStorage.getItem(`cart-${userIdLocal}`);
+      const localStorageCart = JSON.parse(localStorage.getItem(`cart-${userId}`) || "null");
       if (localStorageCart) {
-        return JSON.parse(localStorageCart);
+        return localStorageCart;
       } else {
-        const response = await axios.get<{ products: Product[] }>(`https://fakestoreapi.com/carts/${userIdLocal}`);
+        const response = await axios.get(`https://fakestoreapi.com/carts/${userId}`);
         return response.data;
       }
     } catch (error) {
       const axiosError = error as AxiosError;
+
       console.error("Error fetching cart:", axiosError.message);
       return thunkAPI.rejectWithValue(axiosError.message);
     }
@@ -56,14 +59,15 @@ export const fetchCartUser = createAsyncThunk<CartUser[], number[], { rejectValu
   "cart/fetchCartUser",
   async (productIds, thunkAPI) => {
     try {
-      const promises = productIds.map((productId: number) =>
-        axios.get<CartUser>(`https://fakestoreapi.com/products/${productId}`).then((res) => res.data)
+      const promises = productIds.map((productId) =>
+        axios.get(`https://fakestoreapi.com/products/${productId}`).then((res) => res.data)
       );
       const products = await Promise.all(promises);
       return products;
     } catch (error) {
       const axiosError = error as AxiosError;
-      console.error(axiosError.message);
+
+      console.log(axiosError.message);
       return thunkAPI.rejectWithValue(axiosError.message);
     }
   }
@@ -75,6 +79,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<{ productId: number; quantity: number }>) {
       const { productId, quantity } = action.payload;
+      const currentUserId = localStorage.getItem("currentUserId");
       if (!state.cart || !state.cart.products) {
         state.cart = { products: [] };
       }
@@ -84,21 +89,35 @@ const cartSlice = createSlice({
       } else {
         state.cart.products.push({ productId, quantity });
       }
-      localStorage.setItem(`cart-${userIdLocal}`, JSON.stringify(state.cart));
+      localStorage.setItem(`cart-${currentUserId}`, JSON.stringify(state.cart));
     },
     deleteToCart(state, action: PayloadAction<{ productId: number }>) {
       const { productId } = action.payload;
-      if (state.cart) {
-        state.cart.products = state.cart.products.filter((item) => item.productId !== productId);
-        localStorage.setItem(`cart-${userIdLocal}`, JSON.stringify(state.cart));
-      }
+      const currentUserId = localStorage.getItem("currentUserId");
+      state.cart.products = state.cart.products.filter((item) => item.productId !== productId);
+      localStorage.setItem(`cart-${currentUserId}`, JSON.stringify(state.cart));
     },
-    updateCart(state, action: PayloadAction<{ products: Product[] }>) {
-      state.cart = { products: action.payload.products };
-      localStorage.setItem(`cart-${userIdLocal}`, JSON.stringify(state.cart));
+    updateCart(state, action: PayloadAction<Cart>) {
+      const currentUserId = localStorage.getItem("currentUserId");
+      state.cart = action.payload;
+      localStorage.setItem(`cart-${currentUserId}`, JSON.stringify(state.cart));
+    },
+    clearCartUser(state) {
+      state.cartUser = [];
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchCart.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchCart.fulfilled, (state, { payload }) => {
+      state.cart = payload;
+      localStorage.setItem(`cart-${localStorage.getItem("currentUserId")}`, JSON.stringify(state.cart));
+      state.isLoading = false;
+    });
+    builder.addCase(fetchCart.rejected, (state) => {
+      state.isLoading = false;
+    });
     builder.addCase(fetchCartUser.pending, (state) => {
       state.isLoading = true;
     });
@@ -109,19 +128,8 @@ const cartSlice = createSlice({
     builder.addCase(fetchCartUser.rejected, (state) => {
       state.isLoading = false;
     });
-    builder.addCase(fetchCart.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(fetchCart.fulfilled, (state, { payload }) => {
-      state.cart = payload;
-      localStorage.setItem(`cart-${userIdLocal}`, JSON.stringify(state.cart));
-      state.isLoading = false;
-    });
-    builder.addCase(fetchCart.rejected, (state) => {
-      state.isLoading = false;
-    });
   },
 });
 
 export default cartSlice.reducer;
-export const { addToCart, deleteToCart, updateCart } = cartSlice.actions;
+export const { addToCart, deleteToCart, updateCart, clearCartUser } = cartSlice.actions;

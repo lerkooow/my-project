@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import NewCategoryComponent from "../NewCategoryComponent"
 import { BrowserRouter, Link } from "react-router-dom";

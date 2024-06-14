@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import Category from "../Category";
 import { BrowserRouter, Link } from "react-router-dom";
